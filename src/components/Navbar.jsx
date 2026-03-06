@@ -48,10 +48,10 @@ export default function Navbar() {
           <Link
             to="/"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2 rounded-xl px-2 py-1 bg-white font-extrabold tracking-tight text-white hover:bg-white/5"
+            className="flex items-center gap-2 rounded-xl px-2 py-1 font-extrabold tracking-tight text-white hover:bg-white/5"
             aria-label="Go to homepage"
           >
-            <img src="/HAVE.png" alt="logo" className="h-20 w-46" />
+            <img src="/logo.png" alt="logo" className="h-22 w-26" />
           </Link>
         </div>
 

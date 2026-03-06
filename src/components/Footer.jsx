@@ -16,18 +16,13 @@ export default function Footer() {
               className="inline-flex items-center gap-3 rounded-2xl px-2 py-1 font-extrabold tracking-tight text-white hover:bg-white/5"
               aria-label="Go to homepage"
             >
-              <img src="/electro_logo.png" alt="logo" className="h-20 w-26" />
+              <img src="/logo.png" alt="logo" className="h-22 w-26" />
               <div className="leading-tight">
                 <div className="text-xs font-semibold text-slate-300">
-                  PCBs • ICs • Sensors • Connectors
+                  Journals • Registers • Crayons • Pens
                 </div>
               </div>
             </Link>
-
-            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-300">
-              Genuine components, secure packing, and quick dispatch. Built for
-              makers, students, and production teams.
-            </p>
 
             {/* Trust badges */}
             <div className="mt-5 flex flex-wrap gap-2 text-xs text-slate-200">
@@ -191,7 +186,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-slate-400">
-            © {year} ElectroStore. All rights reserved.
+            © {year} Havelook. All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300">
