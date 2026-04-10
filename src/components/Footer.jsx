@@ -24,6 +24,22 @@ export default function Footer() {
               </div>
             </Link>
 
+            <p className="text-sm leading-6 text-gray-400">
+              MUNDAKKAL BUILDING <br />
+              19/260 E, 19/260 F <br />
+              Cheenikuzhy <br />
+              North Mazhuvannoor <br />
+              KINFRA Small Industries Park Mazhuvannur <br />
+              Ernakulam, Kerala - 686669
+            </p>
+
+            <div className="mt-4 text-sm text-gray-400 space-y-1">
+              <p>📞 +91 8590186561</p>
+              <p>✉️ sales@havelook.co.in</p>
+              <p>GST REG : 32HWFPP9482M1ZN </p>
+              <p>UDYAM REG : UDYAM-KL-02-0152640</p>
+            </div>
+
             {/* Trust badges */}
             <div className="mt-5 flex flex-wrap gap-2 text-xs text-slate-200">
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
@@ -32,7 +48,7 @@ export default function Footer() {
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
                 ⚡ Fast dispatch
               </span>
-            </div>          
+            </div>
           </div>
 
           {/* Link Columns */}
