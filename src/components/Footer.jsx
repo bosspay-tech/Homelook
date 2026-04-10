@@ -32,29 +32,7 @@ export default function Footer() {
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
                 ⚡ Fast dispatch
               </span>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
-                🧯 ESD-safe packing
-              </span>
-            </div>
-
-            {/* Newsletter */}
-            <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-              <div className="text-sm font-semibold text-white">
-                Get restock alerts & deals
-              </div>
-              <div className="mt-3 flex gap-2">
-                <input
-                  placeholder="Enter your email"
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-2.5 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
-                />
-                <button className="shrink-0 rounded-2xl bg-cyan-500 px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">
-                  Join
-                </button>
-              </div>
-              <p className="mt-2 text-xs text-slate-400">
-                No spam. Unsubscribe anytime.
-              </p>
-            </div>
+            </div>          
           </div>
 
           {/* Link Columns */}

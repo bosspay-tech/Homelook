@@ -22,7 +22,7 @@ export default function Contact() {
               COMPANY
             </div>
             <h2 className="mt-2 text-lg font-extrabold text-white">
-              ONLINE ELECTRO ENTERPRISES PRIVATE LIMITED
+              HAVELOOK COLLECTION 
             </h2>
 
             <div className="mt-5 space-y-4 text-sm text-slate-300">
@@ -31,10 +31,13 @@ export default function Contact() {
                   ADDRESS
                 </div>
                 <p className="mt-1 leading-6">
-                  Door no-42 jeyankondam main road V Kaikatti
+                  MUNDAKKAL BUILDING
                   <br />
-                  Reddipalaiyam ARIYALUR-621704
-                  <br /> Near pandiyan bakery
+                  19/260 E, 19/260 F
+                  <br /> Cheenikuzhy
+                  <br /> North Mazhuvannoor
+                  <br /> KINFRA Small Industries Park Mazhuvannur
+                  <br /> Ernakulam,Kerala-686669
                 </p>
               </div>
 
@@ -43,10 +46,40 @@ export default function Contact() {
                   MOBILE
                 </div>
                 <a
-                  href="tel:+917048179839"
+                  href="tel:+918590186561"
                   className="mt-1 inline-flex items-center gap-2 font-semibold text-white hover:text-cyan-300"
                 >
-                  +91 9342491462
+                  +91 8590186561
+                </a>
+              </div>
+              <div>
+                <div className="text-xs font-semibold tracking-widest text-slate-400">
+                  MAIL ID
+                </div>
+                <a
+                  className="mt-1 inline-flex items-center gap-2 font-semibold text-white hover:text-cyan-300"
+                >
+                  sales@havelook.co.in
+                </a>
+              </div>
+              <div>
+                <div className="text-xs font-semibold tracking-widest text-slate-400">
+                  GST REG: 
+                </div>
+                <a
+                  className="mt-1 inline-flex items-center gap-2 font-semibold text-white hover:text-cyan-300"
+                >
+                  32HWFPP9482M1ZN 
+                </a>
+              </div>
+              <div>
+                <div className="text-xs font-semibold tracking-widest text-slate-400">
+                  UDYAM REG :
+                </div>
+                <a
+                  className="mt-1 inline-flex items-center gap-2 font-semibold text-white hover:text-cyan-300"
+                >
+                  UDYAM-KL-02-0152640 
                 </a>
               </div>
             </div>
@@ -112,20 +145,7 @@ export default function Contact() {
               </p>
             </form>
           </div>
-        </div>
-
-        {/* Bottom trust */}
-        <div className="mt-8 flex flex-wrap gap-2 text-xs text-slate-200">
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
-            ⏱️ Quick Response
-          </span>
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
-            📍 Surat, Gujarat
-          </span>
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur">
-            📞 Call Support
-          </span>
-        </div>
+        </div>        
       </div>
     </div>
   );

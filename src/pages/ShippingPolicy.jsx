@@ -98,7 +98,7 @@ export default function ShippingPolicy() {
             <p className="mt-2 text-sm leading-6 text-slate-300">
               Questions about shipping? Email us at{" "}
               <span className="font-semibold text-cyan-300">
-                support@easyelectroonline.com
+                sales@havelook.co.in
               </span>
               .
             </p>

@@ -52,6 +52,7 @@ export default function Navbar() {
             aria-label="Go to homepage"
           >
             <img src="/logo.png" alt="logo" className="h-22 w-26" />
+            Havelook Collections
           </Link>
         </div>
 
