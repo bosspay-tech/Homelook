@@ -18,6 +18,7 @@ import MyOrders from "./pages/MyOrders";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./components/ScrollToTop";
 import Contact from "./pages/Contact";
+import About from "./pages/About";
 const App = () => {
   return (
     <Router>
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/orders"
           element={

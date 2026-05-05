@@ -33,11 +33,13 @@ export default function Footer() {
               Ernakulam, Kerala - 686669
             </p>
 
-            <div className="mt-4 text-sm text-gray-400 space-y-1">
+            <div className="mt-4 text-sm text-gray-400 space-y-1 break-words">
               <p>📞 +91 8590186561</p>
               <p>✉️ sales@havelook.co.in</p>
               <p>GST REG : 32HWFPP9482M1ZN </p>
               <p>UDYAM REG : UDYAM-KL-02-0152640</p>
+              <p>Legal Name : MAHINKUTTY MANNOOPARAMBIL PAREED</p>
+              <p>Trade name : HAVELOOK COLLECTIONS</p>
             </div>
 
             {/* Trust badges */}
@@ -121,6 +123,14 @@ export default function Footer() {
               <div>
                 <h4 className="text-sm font-bold text-white">Company</h4>
                 <ul className="mt-4 space-y-2.5 text-sm">
+                  <li>
+                    <Link
+                      className="text-slate-300 hover:text-white"
+                      to="/about"
+                    >
+                      About Us
+                    </Link>
+                  </li>
                   <li>
                     <Link
                       className="text-slate-300 hover:text-white"
