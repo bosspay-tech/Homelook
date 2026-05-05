@@ -58,7 +58,7 @@ function ProductCard({ product, onViewDetails }) {
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
-            {product?.category || "Electronics"}
+            {product?.type || product?.category || "Stationery"}
           </span>
 
           {typeof product?.rating === "number" && (
