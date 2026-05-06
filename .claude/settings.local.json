@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node fetch-products.js)",
+      "Bash(node --input-type=module)",
+      "WebFetch(domain:unsplash.com)",
+      "Bash(node update-product-images.js)",
+      "WebFetch(domain:images.unsplash.com)",
+      "Bash(node fix-products.js)"
+    ]
+  }
+}
