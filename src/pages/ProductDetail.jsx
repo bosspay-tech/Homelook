@@ -104,12 +104,16 @@ function Accordion({ items }) {
   );
 }
 
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=800&auto=format&fit=crop";
+
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
+  const [imgSrc, setImgSrc] = useState(FALLBACK_IMAGE);
 
   const [pincode, setPincode] = useState("");
   const [pinMsg, setPinMsg] = useState("");
@@ -138,6 +142,7 @@ export default function ProductDetail() {
         setProduct(null);
       } else {
         setProduct(data);
+        setImgSrc(data?.image_url || FALLBACK_IMAGE);
         setSelectedVariant(null);
       }
 
@@ -244,10 +249,11 @@ export default function ProductDetail() {
               <div className="relative group">
                 <div className="relative aspect-4/5 overflow-hidden">
                   <img
-                    src={product.image_url}
+                    src={imgSrc}
                     alt={product.title}
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.06]"
                     loading="lazy"
+                    onError={() => setImgSrc(FALLBACK_IMAGE)}
                   />
 
                   {/* overlays */}

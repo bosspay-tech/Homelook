@@ -1,4 +1,10 @@
+import { useState } from "react";
+
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=800&auto=format&fit=crop";
+
 function ProductCard({ product, onViewDetails }) {
+  const [imgSrc, setImgSrc] = useState(product?.image_url || FALLBACK_IMAGE);
   const price = Number(product?.base_price ?? 0);
   const mrp = Number(product?.mrp ?? 0);
   const hasDiscount = mrp > price;
@@ -13,10 +19,11 @@ function ProductCard({ product, onViewDetails }) {
       {/* Image */}
       <div className="relative aspect-4/5 overflow-hidden bg-slate-900">
         <img
-          src={product?.image_url}
+          src={imgSrc}
           alt={product?.title}
           className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
+          onError={() => setImgSrc(FALLBACK_IMAGE)}
         />
 
         {/* overlays */}

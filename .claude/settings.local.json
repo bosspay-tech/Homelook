@@ -6,7 +6,9 @@
       "WebFetch(domain:unsplash.com)",
       "Bash(node update-product-images.js)",
       "WebFetch(domain:images.unsplash.com)",
-      "Bash(node fix-products.js)"
+      "Bash(node fix-products.js)",
+      "Bash(node check-pen-images.js)",
+      "Bash(del check-pen-images.js)"
     ]
   }
 }
