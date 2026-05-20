@@ -35,7 +35,7 @@ export default function Footer() {
 
             <div className="mt-4 text-sm text-gray-400 space-y-1 break-words">
               <p>📞 +91 8590186561</p>
-              <p>✉️ sales@havelook.co.in</p>
+              <p>✉️ support@havelook.co.in</p>
               <p>GST REG : 32HWFPP9482M1ZN </p>
               <p>UDYAM REG : UDYAM-KL-02-0152640</p>
               <p>Legal Name : MAHINKUTTY MANNOOPARAMBIL PAREED</p>
@@ -112,7 +112,7 @@ export default function Footer() {
                     Customer care
                   </div>
                   <div className="mt-1 text-xs text-slate-300">
-                    Email: support@easyelectroonline.com
+                    Email: support@havelook.co.in
                   </div>
                   <div className="mt-1 text-xs text-slate-300">
                     Hours: Mon–Sat • 10am–6pm
