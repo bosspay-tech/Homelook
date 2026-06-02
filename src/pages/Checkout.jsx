@@ -16,6 +16,15 @@ export default function Checkout() {
   const { items, total, clearCart } = useCartStore();
   const { user } = useAuth();
 
+  const [customer, setCustomer] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,6 +33,31 @@ export default function Checkout() {
     () => items.reduce((sum, it) => sum + Number(it.quantity || 0), 0),
     [items],
   );
+
+  const handleCustomerChange = (e) => {
+    const { name, value } = e.target;
+    setCustomer((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    if (!customer.name.trim()) return "Please enter full name.";
+    if (!customer.email.trim()) return "Please enter email address.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+      return "Please enter a valid email address.";
+    }
+    if (!customer.phone.trim()) return "Please enter phone number.";
+    if (!/^\d{10}$/.test(customer.phone)) {
+      return "Please enter a valid 10-digit phone number.";
+    }
+    if (!customer.address.trim()) return "Please enter address.";
+    if (!customer.city.trim()) return "Please enter city.";
+    if (!customer.state.trim()) return "Please enter state.";
+    if (!customer.pincode.trim()) return "Please enter pincode.";
+    if (!/^\d{6}$/.test(customer.pincode)) {
+      return "Please enter a valid 6-digit pincode.";
+    }
+    return "";
+  };
 
   if (!items?.length) {
     return (
@@ -50,8 +84,15 @@ export default function Checkout() {
   }
 
   const placeOrder = async () => {
-    setLoading(true);
     setError("");
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setLoading(true);
 
     const { error } = await supabase.from("orders").insert({
       store_id: STORE_ID,
@@ -59,6 +100,13 @@ export default function Checkout() {
       items,
       total: subtotal,
       status: "placed",
+      customer_name: customer.name,
+      customer_email: customer.email,
+      customer_phone: customer.phone,
+      customer_address: customer.address,
+      customer_city: customer.city,
+      customer_state: customer.state,
+      customer_pincode: customer.pincode,
     });
 
     if (error) {
@@ -119,8 +167,121 @@ export default function Checkout() {
 
         {/* Layout */}
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
-          {/* Order summary list */}
-          <div className="lg:col-span-2">
+          {/* Customer details and order summary */}
+          <div className="space-y-6 lg:col-span-2">
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-sm backdrop-blur">
+              <div className="border-b border-white/10 bg-black/20 px-5 py-4">
+                <h3 className="text-sm font-semibold text-white">
+                  Customer Details
+                </h3>
+                <p className="mt-1 text-xs text-slate-300">
+                  Please enter billing and shipping information.
+                </p>
+              </div>
+
+              <div className="grid gap-4 px-5 py-4 sm:grid-cols-2">
+                <div className="sm:col-span-2">
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={customer.name}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter full name"
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={customer.email}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter email"
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={customer.phone}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter phone number"
+                    maxLength={10}
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    Address
+                  </label>
+                  <textarea
+                    name="address"
+                    value={customer.address}
+                    onChange={handleCustomerChange}
+                    placeholder="House no, street, area"
+                    rows={3}
+                    className="w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={customer.city}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter city"
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={customer.state}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter state"
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                    Pincode
+                  </label>
+                  <input
+                    type="text"
+                    name="pincode"
+                    value={customer.pincode}
+                    onChange={handleCustomerChange}
+                    placeholder="Enter pincode"
+                    maxLength={6}
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-[#d4af37] focus:ring-4 focus:ring-[#d4af37]/10"
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-sm backdrop-blur">
               <div className="border-b border-white/10 bg-black/20 px-5 py-4">
                 <h3 className="text-sm font-semibold text-white">
@@ -218,7 +379,7 @@ export default function Checkout() {
                 Place your order
               </h3>
               <p className="mt-1 text-xs text-slate-300">
-                By placing the order you agree to our policies.
+                Enter your address first, then confirm the order.
               </p>
 
               <button
