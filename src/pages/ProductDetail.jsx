@@ -441,13 +441,13 @@ export default function ProductDetail() {
                   </div>
                   <ul className="mt-3 space-y-2 text-sm text-stone-200/80">
                     <li className="flex gap-2">
-                      <span>🏷️</span> Bundle deals on select items (dummy)
+                      <span>🏷️</span> Bundle deals on select items
                     </li>
                     <li className="flex gap-2">
                       <span>🎁</span> Gift-ready packaging available
                     </li>
                     <li className="flex gap-2">
-                      <span>🚚</span> Free shipping above ₹999 (dummy)
+                      <span>🚚</span> Free shipping above ₹999
                     </li>
                   </ul>
                 </div>
@@ -477,7 +477,7 @@ export default function ProductDetail() {
                           <li>Type: {typeLabel}</li>
                           <li>Category: {categoryLabel}</li>
                           <li>Item: {product?.title}</li>
-                          <li>Quality: Checked (dummy)</li>
+                          <li>Quality: Checked</li>
                         </ul>
                       ),
                     },
@@ -495,8 +495,8 @@ export default function ProductDetail() {
                       title: "Shipping & Returns",
                       content: (
                         <ul className="list-disc pl-5">
-                          <li>Dispatch: within 24–48 hours (dummy)</li>
-                          <li>Delivery: 2–5 business days (dummy)</li>
+                          <li>Dispatch: within 24–48 hours</li>
+                          <li>Delivery: 2–5 business days</li>
                           <li>Returns: As per store policy</li>
                         </ul>
                       ),

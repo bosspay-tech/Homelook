@@ -105,7 +105,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Contact Form (optional/dummy) */}
+          {/* Contact Form */}
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur">
             <div className="text-xs font-semibold tracking-widest text-slate-400">
               SEND A MESSAGE
