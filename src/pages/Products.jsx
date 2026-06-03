@@ -7,6 +7,67 @@ import ProductCard from "../components/ProductCard";
 const ITEMS_PER_PAGE = 12;
 const STATIONERY_TYPES = ["Pen", "Notebook", "Paper"];
 
+function normalizeSearchText(value) {
+  return String(value ?? "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function getProductSearchText(product) {
+  return [
+    product?.title,
+    product?.type,
+    product?.category,
+    Array.isArray(product?.categories) ? product.categories.join(" ") : "",
+    product?.short_description,
+    product?.description,
+  ]
+    .map(normalizeSearchText)
+    .filter(Boolean)
+    .join(" ");
+}
+
+function scoreProductSearch(product, query) {
+  const search = normalizeSearchText(query);
+  const tokens = search.split(" ").filter(Boolean);
+  if (!tokens.length) return 0;
+
+  const title = normalizeSearchText(product?.title);
+  const type = normalizeSearchText(product?.type);
+  const category = normalizeSearchText(product?.category);
+  const categories = Array.isArray(product?.categories)
+    ? normalizeSearchText(product.categories.join(" "))
+    : "";
+  const shortDescription = normalizeSearchText(product?.short_description);
+  const description = normalizeSearchText(product?.description);
+  const allText = getProductSearchText(product);
+
+  if (!tokens.every((token) => allText.includes(token))) return 0;
+
+  let score = 0;
+
+  if (type === search) score += 500;
+  if (type.includes(search)) score += 350;
+  if (title === search) score += 300;
+  if (title.startsWith(search)) score += 250;
+  if (title.includes(search)) score += 200;
+  if (category.includes(search) || categories.includes(search)) score += 150;
+  if (shortDescription.includes(search)) score += 40;
+  if (description.includes(search)) score += 20;
+
+  for (const token of tokens) {
+    if (type.startsWith(token)) score += 120;
+    else if (type.includes(token)) score += 90;
+
+    if (title.split(/\W+/).some((word) => word.startsWith(token))) score += 80;
+    else if (title.includes(token)) score += 60;
+
+    if (category.includes(token) || categories.includes(token)) score += 45;
+    if (shortDescription.includes(token)) score += 12;
+    if (description.includes(token)) score += 6;
+  }
+
+  return score;
+}
+
 /* ---------- SKELETON ---------- */
 function SkeletonCard() {
   return (
@@ -79,13 +140,17 @@ export default function Products() {
   }, [category, type]);
 
   const filtered = useMemo(() => {
-    const s = q.trim().toLowerCase();
+    const s = q.trim();
     if (!s) return products;
-    return products.filter((p) =>
-      `${p.title ?? ""} ${p.description ?? ""} ${p.short_description ?? ""}`
-        .toLowerCase()
-        .includes(s),
-    );
+    return products
+      .map((product, index) => ({
+        product,
+        index,
+        score: scoreProductSearch(product, s),
+      }))
+      .filter((result) => result.score > 0)
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .map((result) => result.product);
   }, [products, q]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
