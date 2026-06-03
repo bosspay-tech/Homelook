@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 const ITEMS_PER_PAGE = 12;
+const STATIONERY_TYPES = ["Pen", "Notebook", "Paper"];
 
 /* ---------- SKELETON ---------- */
 function SkeletonCard() {
@@ -50,7 +51,11 @@ export default function Products() {
         .order("created_at", { ascending: false });
 
       if (category) query = query.contains("categories", [category]);
-      if (type) query = query.eq("type", type);
+      if (type === "Stationery") {
+        query = query.in("type", STATIONERY_TYPES);
+      } else if (type) {
+        query = query.eq("type", type);
+      }
 
       const { data, error } = await query;
 
@@ -63,6 +68,7 @@ export default function Products() {
         setProducts(data || []);
       }
 
+      setCurrentPage(1);
       setLoading(false);
     };
 
@@ -71,10 +77,6 @@ export default function Products() {
       alive = false;
     };
   }, [category, type]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [q, category, type]);
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -99,7 +101,13 @@ export default function Products() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const headerTitle = type ? `${type}s` : category ? `${category}` : "Stationery";
+  const headerTitle = type
+    ? type === "Stationery"
+      ? "Stationery"
+      : `${type}s`
+    : category
+      ? `${category}`
+      : "Stationery";
   const headerDesc = type
     ? `Explore our ${type.toLowerCase()} collection — curated for everyday use.`
     : category
@@ -142,7 +150,10 @@ export default function Products() {
               </span>
               <input
                 value={q}
-                onChange={(e) => setQ(e.target.value)}
+                onChange={(e) => {
+                  setQ(e.target.value);
+                  setCurrentPage(1);
+                }}
                 placeholder="Search stationery…"
                 className="w-full rounded-2xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm text-stone-100 outline-none backdrop-blur transition placeholder:text-stone-500 focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/15"
               />

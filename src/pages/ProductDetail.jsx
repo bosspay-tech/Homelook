@@ -79,10 +79,15 @@ function StarRow({ rating = 4.6, count = 312 }) {
   );
 }
 
-function Accordion({ items }) {
-  const [open, setOpen] = useState(0);
+function Accordion({ items, defaultOpenIndex = 0, className = "" }) {
+  const [open, setOpen] = useState(defaultOpenIndex);
   return (
-    <div className="divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur">
+    <div
+      className={[
+        "divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur",
+        className,
+      ].join(" ")}
+    >
       {items.map((it, idx) => (
         <div key={it.title}>
           <button
@@ -106,6 +111,78 @@ function Accordion({ items }) {
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=800&auto=format&fit=crop";
+
+function isPlainObject(value) {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  );
+}
+
+function DetailSection({ title, children }) {
+  return (
+    <section className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-sm backdrop-blur">
+      <h2 className="text-sm font-semibold text-white">{title}</h2>
+      <div className="mt-3 text-sm leading-6 text-stone-200/80">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function SpecificationsList({ typeLabel, categoryLabel, product, attributes }) {
+  return (
+    <ul className="list-disc pl-5">
+      <li>Type: {typeLabel}</li>
+      <li>Category: {categoryLabel}</li>
+      <li>Item: {product?.title}</li>
+      <li>Quality: Checked</li>
+      {attributes.map(([key, value]) => (
+        <li key={key}>
+          {formatAttributeKey(key)}: {formatAttributeValue(value)}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function formatAttributeKey(key) {
+  return String(key)
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function formatAttributeValue(value) {
+  if (Array.isArray(value)) {
+    return value.map(formatAttributeValue).join(", ");
+  }
+
+  if (isPlainObject(value)) {
+    return Object.entries(value)
+      .map(([key, nestedValue]) => {
+        return `${formatAttributeKey(key)}: ${formatAttributeValue(nestedValue)}`;
+      })
+      .join(", ");
+  }
+
+  if (value === null || value === undefined || value === "") {
+    return "Not specified";
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+
+  return String(value);
+}
+
+function getAttributeEntries(attributes) {
+  if (!isPlainObject(attributes)) return [];
+  return Object.entries(attributes);
+}
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -223,6 +300,7 @@ export default function ProductDetail() {
 
   const typeLabel = product?.type || "Stationery";
   const categoryLabel = product?.category || "Essentials";
+  const attributeEntries = getAttributeEntries(product?.attributes);
 
   return (
     <div className="min-h-[70vh] bg-linear-to-b from-stone-950 via-stone-950 to-stone-900 text-stone-100">
@@ -286,8 +364,19 @@ export default function ProductDetail() {
               </div>
             </div>
 
+            <div className="mt-6 hidden lg:block">
+              <DetailSection title="Specifications">
+                <SpecificationsList
+                  typeLabel={typeLabel}
+                  categoryLabel={categoryLabel}
+                  product={product}
+                  attributes={attributeEntries}
+                />
+              </DetailSection>
+            </div>
+
             {/* DETAILS STRIP */}
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 hidden gap-3 lg:grid lg:grid-cols-3">
               {[
                 { t: "Authentic quality", d: "Curated daily essentials" },
                 { t: "Fast dispatch", d: "Packed within 24–48 hrs" },
@@ -306,7 +395,7 @@ export default function ProductDetail() {
 
           {/* RIGHT: BUY BOX */}
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-6">
+            <div>
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -348,12 +437,7 @@ export default function ProductDetail() {
                   <p className="mt-3 text-sm text-stone-200/80">
                     {product.short_description}
                   </p>
-                ) : (
-                  <p className="mt-3 text-sm text-stone-200/80">
-                    Everyday stationery essential—designed for smooth writing,
-                    neat organization, and long-lasting use.
-                  </p>
-                )}
+                ) : null}
 
                 {/* PRICE */}
                 <div className="mt-5 flex flex-wrap items-end gap-3">
@@ -434,6 +518,32 @@ export default function ProductDetail() {
                   </Link>
                 </div>
 
+                <div className="mt-6">
+                  <DetailSection title="Description">
+                    {product.description ? (
+                      <p className="whitespace-pre-line">
+                        {product.description}
+                      </p>
+                    ) : (
+                      <p>
+                        A premium stationery essential built for daily comfort,
+                        neat results, and dependable performance.
+                      </p>
+                    )}
+                  </DetailSection>
+                </div>
+
+                <div className="mt-6 lg:hidden">
+                  <DetailSection title="Specifications">
+                    <SpecificationsList
+                      typeLabel={typeLabel}
+                      categoryLabel={categoryLabel}
+                      product={product}
+                      attributes={attributeEntries}
+                    />
+                  </DetailSection>
+                </div>
+
                 {/* OFFERS */}
                 <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
                   <div className="text-sm font-semibold text-white">
@@ -453,34 +563,10 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* DESCRIPTION + INFO */}
               <div className="mt-6">
                 <Accordion
+                  defaultOpenIndex={-1}
                   items={[
-                    {
-                      title: "Description",
-                      content: product.description ? (
-                        <p className="whitespace-pre-line">
-                          {product.description}
-                        </p>
-                      ) : (
-                        <p>
-                          A premium stationery essential built for daily
-                          comfort, neat results, and dependable performance.
-                        </p>
-                      ),
-                    },
-                    {
-                      title: "Specifications",
-                      content: (
-                        <ul className="list-disc pl-5">
-                          <li>Type: {typeLabel}</li>
-                          <li>Category: {categoryLabel}</li>
-                          <li>Item: {product?.title}</li>
-                          <li>Quality: Checked</li>
-                        </ul>
-                      ),
-                    },
                     {
                       title: "Package & Care",
                       content: (
